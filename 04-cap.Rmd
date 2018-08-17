@@ -1,0 +1,119 @@
+# Aplicando métodos de agrupamento para diferentes tipos de dados 
+
+Por possuírem características diferentes, cada algoritmo consegue obter um resultado mais satisfatório com determinado tipo de dados. Portanto, ao se escolher o algoritmo ideal deve-se levar em conta fatores como tamanho e distribuição dos dados, tempo de execução do algoritmo e precisão do resultado. 
+
+O primeiro fator analisado diz respeito ao comportamento de cada algoritmo diante de dados com distribuição de dados randômica. Diz-se que uma distribuição é randômica quando todos os pontos de um dado estão muito próximos um do outro. Para isso, utilizou-se uma amostra aleatória, obtida através da função sample do R.
+
+Tal amostra foi, primeiramente, agrupada em três “clusters” utilizando o K-means duas vezes distintas, os resultados foram plotados em gráficos (5.1) (5.2) com o auxílio do pacote de visualização de “cluster” factorextra(2017).
+
+```{r ,out.width='65%', fig.align='center', fig.cap='Primeira distribuição randômica pelo K-means',echo=FALSE}
+knitr::include_graphics('Grap1.png')
+```
+
+```{r ,out.width='65%', fig.align='center', fig.cap='Segunda distribuição randômica pelo K-means',echo=FALSE}
+knitr::include_graphics('Grap2.png')
+```
+
+O gráfico (5.1) foi resultado da primeira tentativa de agrupar o dado, e o gráfico (5.2) foi o resultado obtido após reexecutar o algoritmo nas mesmas conduções. Esperava-se os mesmos resultados nas duas tentativas, porém o K-means encontrou padrões diferentes em cada execução. 
+
+Isso se dá por principalmente dois fatores, o primeiro desrespeito que o K-means utilizar da distância euclidiana para calcular a similaridade. A distância euclidiana por elevar a diferença das coordenadas de cada ponto ao quadrado torna o cálculo da similaridade sensível a pontos muito difusos.
+
+O segundo tem a ver com o ponto inicial escolhido pelo algoritmo. O K-means, partindo de amostras aleatórias como centroides, agrupa e reagrupa os dados até encontrar o menor resultado da equação (3.1), porém, para dados randômicos esse resultado pode ser encontrado com diferentes padrões de agrupamento, dependendo justamente do ponto inicial de centroides.
+Agrupando a mesma amostra randômica, sob as mesmas circunstâncias, porém agora através do PAM obtém-se os gráficos (5.3) (5.4).
+
+```{r ,out.width='65%', fig.align='center', fig.cap='Primeira distribuição randômica pelo PAM',echo=FALSE}
+knitr::include_graphics('Grap3.png')
+```
+
+```{r ,out.width='65%', fig.align='center', fig.cap='Segunda distribuição randômica pelo PAM',echo=FALSE}
+knitr::include_graphics('Grap4.png')
+```
+
+O gráfico (5.3) é a primeira tentativa de agrupamento e o gráfico (5.2) a segunda. Observa-se que ambos os gráficos são idênticos, atendendo então os resultados esperados. Portanto o PAM não apresenta o mesmo problema do K-means. 
+
+Isso essencialmente porque o PAM utiliza a distância de Manhattan, menos sensível a pontos difusos, por não elevar a diferença ao quadrado; e porque o ponto inicial é calculado. 
+
+Dado os resultados conclui-se que, para dados randômicos o PAM é uma melhor opção por confiabilidade. Porém, ao comparar os gráficos (5.3) e (5.1) - este feito através do K-means e aquele do PAM - veremos que são idênticos. Isso mostra que o K-means tem potencial para obter resultados tão bons quanto aos do PAM. 
+
+Mas outro fator que deve ter em consideração ao escolher entre os métodos é o tamanho dos dados. O PAM apesar de mais confiável é limitado não conseguindo processar dados muito grandes.
+
+Portando agora foi exportado uma tabela do IBGE contendo o PIB per capita dos municípios brasileiros nos anos de 2010 e 2011. Agrupou-se em os dados em cinco clusters e plotou-se o resultado nos gráficos (5.5) (5.6), sendo o primeiro através do K-means e o segundo através do CLARA. 
+
+```{r ,out.width='65%', fig.align='center', fig.cap='Agrupamento pelo K-means',echo=FALSE}
+knitr::include_graphics('Grap5.png')
+```
+
+```{r ,out.width='65%', fig.align='center', fig.cap='Agrupamento pelo CLARA',echo=FALSE}
+knitr::include_graphics('Grap6.png')
+```
+
+Dado os dois gráficos é visível que os dois algoritmos encontraram padrões diferentes de agrupamentos. A ideia desse agrupamento era verificar se há padrões de PIB dentro das cidades de cada estado brasileiro. Fazendo-se então uma tabela gabarito, que mostra quantas cidades de cada estado foi classificada em cada cluster obtém as seguintes tabelas (1) (2).
+
+**Tabela 1**
+
+|Regiões|1|2|3|4|5|
+|---|---|---|---|---|---|
+|Centro-Oeste|173|54|222|12|2|
+|Nordeste|1665|28|108|6|0|
+|Norte|368|9|86|2|0|
+|Sudeste|812|202|655|44|9|
+|Sul|210|196|726|11|3|
+
+**Tabela 2**
+
+|Regiões|1|2|3|4|5|
+|---|---|---|---|---|---|
+|Centro-Oeste|154|200|38|56|15|
+|Nordeste|58|209|1504|30|6|
+|Norte|49|176|229|9|2|
+|Sudeste|404|634|414|216|54|
+|Sul|513|394|20|205|14|
+
+A tabela (1) se refere do agrupamento pelo K-means, enquanto que a tabela (2) se refere pelo CLARA. Dada as duas tabelas dá para se concluir que o agrupamento pelo método CLARA obteve melhor resultado uma vez que o número majoritário de cidades de cada estado ficou concentrado em três clusters, enquanto pelo K-means em dois. Agora refazendo esse agrupamento, porém pelo método PAM, obtém-se o gráfico (5.7).
+
+```{r ,out.width='65%', fig.align='center', fig.cap='Agrupamento pelo PAM',echo=FALSE}
+knitr::include_graphics('Grap7.png')
+```
+
+Analisando o gráfico (5.7) observa-se que ele contém o mesmo padrão que o gráfico (5.6), ou seja, tanto o agrupamento no PAM e no CLARA obteve o mesmo resultado. Daí conclui-se que o CLARA é a melhor ferramenta para grandes pois consegue manter a precisão do PAM mas com um tempo de execução absurdamente menor. 
+	
+Agora para comparar a eficiência entre o PAM e o K-means em dados pequenos e não randômicos foi utilizado o dado do banco de dados iris do R. Esse banco de dados consistem no comprimento e largura das pétalas e sépalas de cento e cinquenta flores de três espécies diferentes. Fez-se o processo de agrupamento por cada método e o plotado nos gráficos (8) (5.9).
+
+```{r ,out.width='65%', fig.align='center', fig.cap='Agrupamento pelo K-means',echo=FALSE}
+knitr::include_graphics('Grap8.png')
+```
+
+```{r ,out.width='65%', fig.align='center', fig.cap='Agrupamento pelo CLARA',echo=FALSE}
+knitr::include_graphics('Grap9.png')
+```
+
+Seja o gráfico (5.8) pelo K-means e o (5.9) pelo CLARA, ao analisá-los é notório que ambos algoritmos mais uma vez encontraram padrões diferentes. Assim, fazendo uma tabela gabarito, contendo quantas flores de cada espécie foi classificada em cada cluster obtém se as tabelas (3) (4). 
+
+**Tabela 3**
+
+|Cluster|Setosa|Versicolor|Virginica|
+|---|---|---|---|
+|1|0|39|14|
+|2|0|11|36|
+|3|50|0|0|
+
+
+**Tabela 4**
+
+|Cluster|Setosa|Versicolor|Virginica|
+|---|---|---|---|
+|1|50|0|0|
+|2|0|9|36|
+|3|0|41|14|
+
+Seja a tabela (3) pelo K-means e a tabela (4) pelo PAM, é visível que os resultados do PAM foram melhores já que classificou um número maior de versicolores no cluster 3.    
+
+Com isso conclui-se que o K-means, por ser um algoritmo mais simples, consegue classificar dados de forma rápida e eficaz, podendo ser usado para dados grandes ou pequenos, com exceção de dados randômicos, no qual perde confiabilidade. 
+
+Já o PAM é um algoritmo robusto, e, justamente por isso, é mais preciso que o K-means ao mesmo tempo que demanda mais tempo para rodar, por isso é ideal para dados pequenos sejam eles randômicos ou não. 
+
+Por fim o CLARA é uma ótima saída para dados grandes, uma vez que consegue, com agilidade, agrupa-los sem perder muito em precisão para o PAM. 
+
+
+
+

@@ -1,0 +1,25 @@
+---
+title: "Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara"
+author: "Rodrigo Teotônio"
+site: bookdown::bookdown_site
+header-includes: \usepackage{graphicx}
+documentclass: book
+output:
+  bookdown::gitbook: default
+  #bookdown::pdf_book: default
+---
+
+
+# Motivação 
+
+Com o avanço dos recursos em software e hardware e dos usos das redes de computadores é crescente a geração e o armazenamento de dados como resultado das diversas atividades humanas. Vivemos em uma sociedade da informação, e se os dados são caracterizados como fatos registrados, a informação é o conjunto de padrões, ou expectativas que estão subjacentes aos dados. Há uma enorme quantidade de informações “escondidas” em bancos de dados - informações potencialmente importantes, mas ainda não foram descobertas ou articuladas. Assim, para que esses dados sejam úteis e gerem conhecimento é necessário fazer a "mineração e a análise dos dados", que consiste em organizar dados, encontrar padrões, associações, mudanças e anomalias relevantes. Neste contexto, duas áreas tornam-se importantes: “Data Mining” ou minineração de dados, e Machine Learning ou aprendizado de máquinas.
+
+A mineração de dados é a extração de informações implícitas, anteriormente desconhecidas e potencialmente úteis a partir de dados. A idéia é criar programas de computador que examinem automaticamente bancos de dados, buscando regularidades ou padrões. Padrões permitem generalização para fazer previsões em dados futuros. Naturalmente, todo algoritmo tem sua falha e haverá problemas, e gerarão padrões corriqueiros e desinteressantes, outros serão hipotéticos e ilegíveis. Assim, é necessário algoritmos robustos o suficiente para lidar com dados imperfeitos e extrair regularidades que são inexatas, mas úteis.
+
+Aprendizagem de máquina objetiva “simular” sistemas computacionais com sistemas reais, tentando, da melhor forma possível, analisar e classificar esses dados, seja prevendo resultados, ou achando padrões de agrupamento. O processo é de abstração: obter os dados, organizar, analisar e inferir padrões. Dois os tipos de algoritmos utilizados: o supervisionado e o não supervisionado. O supervisionado (classificação) faz a análise de dados através de modelos matemáticos (lineares, logarítmicos, exponenciais e regressores) com intuito de entender e, posteriormente, prever o comportamento de certo modelo real. Nesse caso, a aprendizagem ocorre por meio de treinamento do classificador com base em experiência prévia. Também deve ser informado o que o algoritmo deve procurar e aprender.
+
+O algoritmo não supervisionado (clusterização) não existe conhecimento pré-definido e o agrupamento ocorre por meio da análise de algum critério a fim de encontrar dados similares. Não sendo fornecido previamente o algoritmo deve procurar, o processo de aprendizagem ocorre por meio de regras associativas que são capazes de extrair similaridades dos dados e formar grupos lógicos sem o conhecimento prévio de quais padrões devem ser buscados.
+
+Portanto, aprendizagem de máquina resolve o problema de variedade e complexidade de dados com diversas ferramentas, porém, sob condições. É notório que o uso de cada método depende de dois principais fatores: o objetivo do pesquisador e a natureza do dado. Aquele no âmbito de escolher entre o supervisionado e o não supervisionado; este no âmbito de escolher de acordo com questões como tamanho e distribuição dos dados. Assim, um dos requisitos de análise é a quantidade suficiente de agrupamentos ("clusters") para gerar um determinado padrão amostral. Isto quer dizer que o algoritmo deve permitir explorar e separar dos dados em grupos com características afins, permitindo distinguir os diferentes padrões. Porém, a medida que os dados crescem para análise, é necessário selecionar o algoritmo adequado.
+
+Este estudo é financiando pelo programa Pró-Ativa da Pró-Reitoria de Graduação da Universidade Federal de Ouro Preto. O objetivo é, dada uma amostra de dados, analisar a formação de agrupamentos por meio dos algoritmos não supervisionados K-Means, PAM e CLARA em função do tipo de dados e do número de cluster. 

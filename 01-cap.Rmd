@@ -1,0 +1,106 @@
+# GitHub & Rbookdown - Como publicar livros 
+
+O GitHub é um sistema de compartilhamento de dados que permite um controle de versão de arquivos. Isso porque ele se baseia no Git, uma ferramenta de VCS (Sistema de Controle de Versão). 
+O fato do GitHub ser uma plataforma OpenSource possibilita que outros usuários colaborem com os trabalhos lá postados em modo público, sugerindo otimizações em novas versões, que, não modificam o arquivo original.  
+Para publicar um Rbookdown em uma página Github são necessários alguns passos
+
+1. Instalando o Git no coputador 
+
+Como o Git a linguagem que serve como base para o GitHub, primeiramente deve-se baixa-lo no computador. Para isso, acesse o [link](https://git-scm.com/downloads), escolha o sistema operacional, faça o download e instale o programa normalmente. 
+
+
+2. Criar um repositório no GitHub 
+
+Primeiramente deve-se criar uma conta na pataforma GitHub. Para isso, deve-se entrar na opção [Sign up](https://github.com/join?source=header-home)no site e cadastrar um nome de usuário, email e uma senha. 
+Criado a conta, na página inicial do GitHub, deve-se clicar na opção criar um novo projeto, que irá abrir a pagina **Create a new repository** que pode ser observado na figura (2.1).
+
+```{r ,out.width='100%', fig.align='center', fig.cap='Janela do repositório',echo=FALSE}
+knitr::include_graphics('Print1.png')
+```
+ 
+Repositórios são análogos de pastas, portanto para cada projeto deve-se criar um novo repositório. Para isso, deve-se definir um nome e, opicionalmente, uma descrição do seu projeto. Antes de criar o repositório marque a opção **Initialize this repository with a README**.
+Repositórios em modo público podem ser criadas de forma ilimitada e gratuita, porém, no modo privado requerem uma assinatura mensal. 
+Feito isso, será exibido a página inial do repositório, ilustrado pela figura (2.2).
+
+```{r ,out.width='100%', fig.align='center', fig.cap='Página inicial do repositório',echo=FALSE}
+knitr::include_graphics('Print2.png')
+```
+ 
+
+A página inicial é composta, por exemplo, de uma barra de configurações gerais do repositório, opções de branch -espécie da subpastas- e opções de criar,deletar e editar arquivos. Por agora, deve-se semente cliar em **Clone or Download** e copiar o link. 
+
+3. Criando um projeto de Rbookdown no R 
+
+Há diversas formas de criar o livro em linguagem R. Aqui será abordado a utilização de arquivos Rmarkdown
+Prmeiramente, deve-se abrir o RStudio e sincronizar uma pasta do computador com o repositório no Github. Para isso deve-se clicar na aba **file** que abrirá a janela **New Project**. Nesta janela selecionar **Version Control** e, posteriomente, **Git**.
+Feito isso, aparecerá três opções para serem preenchidas, como pode ser observado na figura 3.
+
+```{r ,out.width='100%', fig.align='center', fig.cap='Janela New Project',echo=FALSE}
+knitr::include_graphics('Print3.png')
+```
+ 
+
+Na aba **Repository URL** cole o link copiado no passo anterior.
+Na aba **Project directory name** dê um nome ao diretório.
+Na aba **Create project as subdirectory of:** selecione um destino no computador para a pasta compartilhada com o repositório.
+Clique em **Create a project** para finalizar a operação. 
+
+4. Configurando o livro para publicação
+
+Para que o GitHub gere um livro em um URL são necessários três arquivos essencialmente: 
+
+Index.Rmd
+
+>Esse arquivo vem com as informações do livro, como nome do autor e do livro, descrição, e, em alguns casos, um prefácio. 
+Demais arquivos “.Rmd” podem ser criados com as iniciais 01-/02-/03-/...; onde o número representa a ordem que os capítulos serão organizados. 
+
+_bookdown.yml
+
+>Sendo o arquivo responsável pelo output, neste arquivo se edita as configurações do documento. Existe uma infinidade de funções que porem customizar o documento exibido que são bem descritas [aqui](https://bookdown.org/yihui/bookdown/html.html#gitbook-style).
+
+.nojekyll
+  
+>Esse arquivo é responsável somente por disponibilizar a opção “master branch /docs folder” no GitHub que será útil na hora de se criar a url que ficará disponível o livro. 
+
+Portanto, nessa etapa deve-se criar os três arquivos na pasta escolhida como diretório no passo 3. 
+O **.nojekyll** é criado com o comando `file.create('.nojekyll')` que pode ser digitado no Rstudio. 
+Tanto o **_bookdown.Yml** e o **Index.Rmd** são arquivos **.Rmd**, portanto, devem ser cria-los através dos comandos **File**,**New File** e **R-markdown...**; respectivamente. Na janela que será aberta basta dar **Ok** uma vez que as configurações serão mudadas através dos códigos.  
+O **_bookdown.Yml** deve conter a linha `output_dir: "docs"`. Já o **Index.Rmd** deve conter o código, que é dado por: 
+
+```
+---
+title: "Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara"
+author: "Rodrigo Teotônio"
+site: bookdown::bookdown_site
+documentclass: book
+output:
+  bookdown::gitbook: default
+  #bookdown::pdf_book: default
+---
+```
+
+Das linhas deste documento, cada uma representa uma configurações do livro. Algumas são parte do código mínimo, portanto não deveram ser alteradas; outras são inforções sobre o projeto que podem e devem ser modificadas. Estas são as configurações `title` e `author`, sendo preenchidas, respectivamente, pelo título do livro e o nome do autor.
+Feito isso, basta clicar na aba “build” no canto superior direito do Rstudio, e selecionar a opção **Build Book** para visualizar o livro. 
+
+5.Exportando os arquivos para o GitHub 
+
+Criado os arquivos básicos e as demais partes do livro em arquivos **.Rmd**, agora pode-se exportar os arquivos do diretório do computador para o repositírio no GitHub através do Git. 
+Para isso, abra o Git, e digite os seguintes comandos:
+
+`git config --global user.nYame "YOUR NAME"` // Faça o login com o usuário GitHub;
+
+`git config --global user.email "YOUR EMAIL ADDRESS"` // Faça o login com o email GitHub;
+
+`cd “O DIRETÓRIO CRIADO EM 2”` // Selecione o diretório do Rproject;
+
+`git init` // Seleciona o repositório nesse diretório;
+
+`git add -A` //Adiciona todos os arquivos novos;
+
+`git commit -m “DESCRIÇÃO DA PRIMEIRA ATUALIZAÇÃO”` // Envia para área de teste;
+
+`git push` // Envia para o repositório no git;
+
+No GitHub estes arquivos já podem ser vistos na interface principal.
+Para constuir um Website com o livro, deve-se, na interface do GitHub, clicar na **condigurações** e, em **souce**, selecione a opção **master branch /docs folder**. Feito isso, o GitHub irá gerar o link, que pode ser visualizado em cima da opção. 
+

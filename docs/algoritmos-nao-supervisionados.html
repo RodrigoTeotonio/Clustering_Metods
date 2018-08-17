@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara</title>
+  <meta name="description" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara" />
+  
+  
+  
+
+<meta name="author" content="Rodrigo Teotônio">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="github-rbookdown-como-publicar-livros.html">
+<link rel="next" href="metodos-de-visualizacao-do-numero-ideal-de-clusters.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Motivação</a></li>
+<li class="chapter" data-level="2" data-path="github-rbookdown-como-publicar-livros.html"><a href="github-rbookdown-como-publicar-livros.html"><i class="fa fa-check"></i><b>2</b> GitHub &amp; Rbookdown - Como publicar livros</a></li>
+<li class="chapter" data-level="3" data-path="algoritmos-nao-supervisionados.html"><a href="algoritmos-nao-supervisionados.html"><i class="fa fa-check"></i><b>3</b> Algoritmos não supervisionados</a></li>
+<li class="chapter" data-level="4" data-path="metodos-de-visualizacao-do-numero-ideal-de-clusters.html"><a href="metodos-de-visualizacao-do-numero-ideal-de-clusters.html"><i class="fa fa-check"></i><b>4</b> Métodos de visualização do número ideal de “clusters”</a></li>
+<li class="chapter" data-level="5" data-path="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html"><a href="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html"><i class="fa fa-check"></i><b>5</b> Aplicando métodos de agrupamento para diferentes tipos de dados</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="algoritmos-nao-supervisionados" class="section level1">
+<h1><span class="header-section-number">3</span> Algoritmos não supervisionados</h1>
+<p>Agrupamento, ou “clustering”, é uma técnica para dividir em grupos um conjunto de dados de acordo com alguma similaridade. Essencialmente, três são os métodos de agrupamento de dados por algoritmo não supervisionado para aprendizagem de máquina: K-means, PAM e CLARA.</p>
+<p>O primeiro, K-means, agrupa (categoriza) os dados por similaridade utilizando o algoritmo Hartigan-Wong (Hartigan and Wong 1979), que calcula a distância Euclidiana entre elementos de acordo com a equação (3.1)</p>
+<p><strong>Equação 3.1</strong></p>
+<p><span class="math display">\[\begin{equation} 
+ W(c_{k})=\sum_{X_{1}\in_{C_{k}}}({x_{i} - u_{k}})^2
+\end{equation}\]</span></p>
+<p>sendo W o grau de similaridade entre pontos; Ck o K-ésimo cluster; Xi pontos para classificação e uK o centroide do cluster Ck, que é calculado pela média das distâncias dos pontos Xi pertencentes a um cluster Ck.</p>
+<p>O K-means funciona de forma que o usuário entra com os dados e com uma quantidade de clusters, e o algoritmo, primeiramente, determina centroides aleatórios para cada cluster. A partir desses centroides este agrupa os pontos formando então os primeiros clusters. Estes têm seus centroides agora calculados pela média dos pontos agrupados no cluster. A partir desses novos centroides, é feito um reagrupamento dos dados, que é seguido de um recalculo de centroides e outro reagrupamento de dados. Daí em diante o K-means executa esse procedimento um número de vezes de forma que minimize a equação (3.1) entre pontos dentro de um mesmo cluster, e maximize, entre clusters diferentes.</p>
+<p>Portanto o K-means é um algoritmo muito simples, ao mesmo tempo que extremamente eficiente. Porem existe alguns problemas fruto da forma de sua execução.
+O primeiro desrespeito ao fato de o número de clusters ser escolhido pelo usuário. Isso porque o K-means tem como principal utilização justamente encontrar padrões em dados, inicialmente, randômicos. Portanto há altas chances do número de clusters sugerido pelo usuário não ser o ideal para seu modelo, afetando drasticamente o resultado final.</p>
+<p>No R, para tentar minimizar o primeiro problema, tem-se um pacote denominado factorextra (2017). Tal pacote é extremamente útil para visualização de clusters, bem como traz ferramentas que auxiliam na escolha do número ideal de clusters para cada dado que serão discutidas mais à frente.
+Outro problema está relacionado com o fato do algoritmo escolher pontos iniciais para centroides de forma aleatória. Isso porque o K-means executa o processo de redefinir clusters uma quantidade definida de vezes, sendo por padrão no R dez vezes, mas podendo ser modificado pelo usuário na execução. Assim um determinado dado que tem seus clusters não muito bem definidos pode ser agrupado de forma diferente para cada execução do algoritmo.</p>
+<p>Uma alternativa a esse problema é oferecida pelo próprio algoritmo que permite o usuário definir o número de vezes que o algoritmo deve rodar escolhendo centroides iniciais aleatórios, onde ele entrega, por fim, o resultado que atenda melhor a equação (3.1).</p>
+<p>Porém uma solução mais eficiente à esta fragilidade do K-means pode ser superada por outro algoritmo mais robusto, que é menos sensível a pontos aleatórios denominado Partitioning Around Medoids (PAM).
+O PAM é um algoritmo presente no pacote cluster (2017) e o funcionamento dele é bastante parecido com o funcionamento do K-means, ou seja, ele atribui centros para clusters e agrupa os dados em cada um desses centos de acordo com o grau de similaridade dos pontos. A diferença porem, no PAM é de como ele faz isso.</p>
+<p>No K-means os centroides iniciais são selecionados de forma aleatória, podendo serem pontos, inclusive, que não fazem parte dos dados, enquanto a similaridade entre cada ponto é dada através da distância Euclidiana, ou seja, o quadrado das distâncias entre os pontos. Já no PAM é calculado a similaridade entre todos os pontos dos dados, escolhendo-se então pontos para servirem de centro para clusters, para que, a partir desses pontos, o restante seja agrupado de acordo com a similaridade entre cada centro. Assim como a similaridade é calculada pela distância de Manhattan (também conhecida por geometria do taxi). Portanto o cálculo da similaridade pelo método PAM obedece a equação (3.2)</p>
+<p><strong>Equação 3.2</strong></p>
+<p><span class="math display">\[\begin{equation} 
+ W(c_{k})=\sum_{X_{1}\in_{C_{k}}}|{X_{1} - X{2}}|
+\end{equation}\]</span></p>
+<p>sendo que o grau de similaridade W passa a ser calculado pelo valor absoluto da diferença entre o vetor X1 e X2 de dimensões n, que representam dois pontos pertencentes ao conjunto de dados Ck.</p>
+<p>Portanto o PAM funciona de forma que o usuário determine os dados a serem agrupados e a quantidade de clusters; e o algoritmo aplica a equação (3.2) para todos os pontos pertencentes aos dados escolhendo os centros, estes denominados no PAM de “medoids” por, diferentemente dos centroides do K-means, terem que pertencer aos dados. Daí cada “medoid” representa o centro de um cluster, portanto todos os outros dados são agrupados em cada um dos clusters de acordo com a similaridade entre estes e aqueles. A partir daí o procedimento é repetido, aplicando-se a equação (3.2) dentro de cada cluster para definir novos “medoids”, e reagrupando todos os dados em função disso; até que se tenha, mas uma vez, uma menor similaridade entre elementos do mesmo cluster e uma maior entre clusters.</p>
+<p>É notório que o PAM é um algoritmo mais completo que o K-means, o que traz vantagens sob este, uma vez que não é tão sensível a dados muito randômicos. Mas ao mesmo tempo não consegue solucionar o problema de deixar para o usuário a atribuição de número de clusters.</p>
+<p>Porem essa complexidade do PAM também gera um grande problema: o tempo de execução. Como algoritmo calcula a similaridade de todos os pontos entre si, para dados muito grandes o tempo de execução pode se tornar absurdamente grande, inviabilizando então, a utilização do método.</p>
+<p>Para contornar esse problema existe um terceiro algorítimo, baseado no PAM, denominado Clustering Large Applications (CLARA). Tal algoritmo funciona selecionando uma amostra dentro do conjunto de dados e aplicando, para esta amostra o algorítimo PAM, sendo que, essa amostra é por padrão de um tamanho de quarenta mais duas vezes a quantidade de clusters. Dentro dessa amostra se elegem os medoids dos quais servem como parâmetro para o agrupamento de todos os outros pontos dos dados. Então os dados são salvos, e o procedimento se repete, escolhendo outra amostra aleatória. Isso acontece cinco vezes, por padrão; porém, para maior confiabilidade do resultado indica-se um número muito maior de testes. O teste de qualidade para cada vez que o procedimento se repetiu obedece a equação (3.3) sendo que o custo de um “medoid” M em relação a todos os pontos do dado D é igual a soma do fator de similaridade W de cada ponto Oi e seu respectivo “medoid” mais próximo, retornado pela função rep; isso dividido ainda pelo número de dados n.</p>
+<p><strong>Equação 3.3</strong></p>
+<p><span class="math display">\[\begin{equation} 
+ Cost(M,D)=\frac{\sum\limits_{i=1}^{n}W(O_{i},rep{M,O_{i}})}{n}
+\end{equation}\]</span></p>
+<p>Assim, por fim, o CLARA aplica a equação (3.3) nos agrupamentos formados a partir de cada amostra aleatória, escolhendo o resultado menor dentre eles. Ou seja, se o algoritmo repetir o procedimento cinco vezes, tendo então, possivelmente, cinco formas de agrupar os mesmos dados diferentes, o CLARA aplica a Cost cinco vezes, assumindo o agrupamento que possui menor valor deste.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="github-rbookdown-como-publicar-livros.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="metodos-de-visualizacao-do-numero-ideal-de-clusters.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,2 @@
+output_dir: "docs"
+rmd_files: ["index.Rmd", "01-cap.Rmd", "02-cap.Rmd", "03-cap.Rmd", "04-cap.Rmd"]

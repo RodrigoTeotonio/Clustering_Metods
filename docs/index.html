@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara</title>
+  <meta name="description" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara" />
+  
+  
+  
+
+<meta name="author" content="Rodrigo Teotônio">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+
+<link rel="next" href="github-rbookdown-como-publicar-livros.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Motivação</a></li>
+<li class="chapter" data-level="2" data-path="github-rbookdown-como-publicar-livros.html"><a href="github-rbookdown-como-publicar-livros.html"><i class="fa fa-check"></i><b>2</b> GitHub &amp; Rbookdown - Como publicar livros</a></li>
+<li class="chapter" data-level="3" data-path="algoritmos-nao-supervisionados.html"><a href="algoritmos-nao-supervisionados.html"><i class="fa fa-check"></i><b>3</b> Algoritmos não supervisionados</a></li>
+<li class="chapter" data-level="4" data-path="metodos-de-visualizacao-do-numero-ideal-de-clusters.html"><a href="metodos-de-visualizacao-do-numero-ideal-de-clusters.html"><i class="fa fa-check"></i><b>4</b> Métodos de visualização do número ideal de “clusters”</a></li>
+<li class="chapter" data-level="5" data-path="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html"><a href="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html"><i class="fa fa-check"></i><b>5</b> Aplicando métodos de agrupamento para diferentes tipos de dados</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="header">
+<h1 class="title">Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara</h1>
+<h4 class="author"><em>Rodrigo Teotônio</em></h4>
+</div>
+<div id="motivacao" class="section level1">
+<h1><span class="header-section-number">1</span> Motivação</h1>
+<p>Com o avanço dos recursos em software e hardware e dos usos das redes de computadores é crescente a geração e o armazenamento de dados como resultado das diversas atividades humanas. Vivemos em uma sociedade da informação, e se os dados são caracterizados como fatos registrados, a informação é o conjunto de padrões, ou expectativas que estão subjacentes aos dados. Há uma enorme quantidade de informações “escondidas” em bancos de dados - informações potencialmente importantes, mas ainda não foram descobertas ou articuladas. Assim, para que esses dados sejam úteis e gerem conhecimento é necessário fazer a “mineração e a análise dos dados”, que consiste em organizar dados, encontrar padrões, associações, mudanças e anomalias relevantes. Neste contexto, duas áreas tornam-se importantes: “Data Mining” ou minineração de dados, e Machine Learning ou aprendizado de máquinas.</p>
+<p>A mineração de dados é a extração de informações implícitas, anteriormente desconhecidas e potencialmente úteis a partir de dados. A idéia é criar programas de computador que examinem automaticamente bancos de dados, buscando regularidades ou padrões. Padrões permitem generalização para fazer previsões em dados futuros. Naturalmente, todo algoritmo tem sua falha e haverá problemas, e gerarão padrões corriqueiros e desinteressantes, outros serão hipotéticos e ilegíveis. Assim, é necessário algoritmos robustos o suficiente para lidar com dados imperfeitos e extrair regularidades que são inexatas, mas úteis.</p>
+<p>Aprendizagem de máquina objetiva “simular” sistemas computacionais com sistemas reais, tentando, da melhor forma possível, analisar e classificar esses dados, seja prevendo resultados, ou achando padrões de agrupamento. O processo é de abstração: obter os dados, organizar, analisar e inferir padrões. Dois os tipos de algoritmos utilizados: o supervisionado e o não supervisionado. O supervisionado (classificação) faz a análise de dados através de modelos matemáticos (lineares, logarítmicos, exponenciais e regressores) com intuito de entender e, posteriormente, prever o comportamento de certo modelo real. Nesse caso, a aprendizagem ocorre por meio de treinamento do classificador com base em experiência prévia. Também deve ser informado o que o algoritmo deve procurar e aprender.</p>
+<p>O algoritmo não supervisionado (clusterização) não existe conhecimento pré-definido e o agrupamento ocorre por meio da análise de algum critério a fim de encontrar dados similares. Não sendo fornecido previamente o algoritmo deve procurar, o processo de aprendizagem ocorre por meio de regras associativas que são capazes de extrair similaridades dos dados e formar grupos lógicos sem o conhecimento prévio de quais padrões devem ser buscados.</p>
+<p>Portanto, aprendizagem de máquina resolve o problema de variedade e complexidade de dados com diversas ferramentas, porém, sob condições. É notório que o uso de cada método depende de dois principais fatores: o objetivo do pesquisador e a natureza do dado. Aquele no âmbito de escolher entre o supervisionado e o não supervisionado; este no âmbito de escolher de acordo com questões como tamanho e distribuição dos dados. Assim, um dos requisitos de análise é a quantidade suficiente de agrupamentos (“clusters”) para gerar um determinado padrão amostral. Isto quer dizer que o algoritmo deve permitir explorar e separar dos dados em grupos com características afins, permitindo distinguir os diferentes padrões. Porém, a medida que os dados crescem para análise, é necessário selecionar o algoritmo adequado.</p>
+<p>Este estudo é financiando pelo programa Pró-Ativa da Pró-Reitoria de Graduação da Universidade Federal de Ouro Preto. O objetivo é, dada uma amostra de dados, analisar a formação de agrupamentos por meio dos algoritmos não supervisionados K-Means, PAM e CLARA em função do tipo de dados e do número de cluster.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+<a href="github-rbookdown-como-publicar-livros.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

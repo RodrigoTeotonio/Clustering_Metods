@@ -1,0 +1,34 @@
+# Métodos de visualização do número ideal de “clusters” 
+
+Seja qual for o algoritmo a se utilizar, sempre o primeiro passo para agrupar dados passa pela determinação do número de clusters. Infelizmente este passo, como já falado, é feito pelo usuário. Assim, para dar uma melhor visão a este usuário, podendo minimizar o máximo os erros, nessa etapa fazem-se o uso de métodos computacionais que indicam uma quantidade ideal de clusters. Há mais de vinte métodos disponíveis no pacote factoextra(2017) para fazer essa análise, porém dois desses serão descritos, o “Elbow Method”, ou Método do Cotovelo; e a “Average Silhouette” ou Média Sihueta.
+Como já discutido, um agrupamento ideal em determinado dado é definido por uma distância mínima entre elementos do mesmo cluster, e máxima entre elementos de clusters diferentes. Após o agrupamento de dados, é efetuado o somatório do grau de similaridade W de cada cluster Ck, e para esse somatório é dado o nome de “Total Within-Cluster Sum of Square (WSS) ” e traduzido pela equação (4.1).
+
+**Equação 4.1**
+
+\begin{equation} 
+ WSS={\sum\limits_{C_{k}=1}^{k}W(C_{k}))}
+\end{equation} 
+
+
+O primeiro método, denominado “Elbow Method”, se dá justamente na representação do “Total Within-Cluster Sum of Square” para cada número de clusters e plotagem de um gráfico com os respectivos dados. A partir desse gráfico diz-se que o número de clusters ideal é justamente o "cotovelo" dessa curva, ou seja, é o número no qual, a partir dele, a variação dos valores do WSS seja pequena.
+
+O outro método de determinar o número de clusters é a “Silhouette”. Enquando o “Elbow” mede o grau de similaridade dos componentes do mesmo cluster, o “Silhouette” é um fator que mede o quanto cada objeto se assemelha ao seu próprio cluster. Para isso, o método computa o algoritmo escolhido de agrupamento (K-means, PAM ou CLARA) com um número de clusters variando de um até dez, por padrão. O “Silhouette” de um determinado ponto do dado é calculado pela equação (4.2)
+
+**Equação 4.2**
+
+\begin{equation} 
+ S(i)=\frac{b(i)-a(i)}{max[a(i),b(i)]}
+\end{equation} 
+
+na qual a “Silhouette” S de um dado ponto i, pertencente a um cluster K, é calculado de forma que a(i) é a média das distâncias deste ponto com outros pertencentes ao mesmo cluster; e b(i) é a menor distância entre o ponto em questão e outro de um cluster diferente. No denominador, a função max retorna a maior distância entre a(i) e b(i).
+Daí a equação (4.2) é aplicada em cada ponto do dado agrupado, e é feito uma média do resultado de todos os esses pontos, sendo então essa, a “Average Silhouette” traduzida na equação (4.3)
+
+**Equação 4.3** 
+
+\begin{equation} 
+ Cost(M,D)=\frac{\sum\limits_{i\in_U}S(i)}{n}
+\end{equation} 
+
+sendo que a “Average Silhouette” Smédia de um dado U é o somatório do “Silhouette” S de cada ponto i pertencente a esse dado, dividido pelo número de pontos n. Esse processo é repetido K vezes para cada n número de clusters, e um gráfico é gerado, com a “Average Silhouette” em função de n. Diz-se que o valor ideal de clusters é quando a “Average Silhouette” é máxima.
+
+

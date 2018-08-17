@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara</title>
+  <meta name="description" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara" />
+  
+  
+  
+
+<meta name="author" content="Rodrigo Teotônio">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="index.html">
+<link rel="next" href="algoritmos-nao-supervisionados.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Motivação</a></li>
+<li class="chapter" data-level="2" data-path="github-rbookdown-como-publicar-livros.html"><a href="github-rbookdown-como-publicar-livros.html"><i class="fa fa-check"></i><b>2</b> GitHub &amp; Rbookdown - Como publicar livros</a></li>
+<li class="chapter" data-level="3" data-path="algoritmos-nao-supervisionados.html"><a href="algoritmos-nao-supervisionados.html"><i class="fa fa-check"></i><b>3</b> Algoritmos não supervisionados</a></li>
+<li class="chapter" data-level="4" data-path="metodos-de-visualizacao-do-numero-ideal-de-clusters.html"><a href="metodos-de-visualizacao-do-numero-ideal-de-clusters.html"><i class="fa fa-check"></i><b>4</b> Métodos de visualização do número ideal de “clusters”</a></li>
+<li class="chapter" data-level="5" data-path="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html"><a href="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html"><i class="fa fa-check"></i><b>5</b> Aplicando métodos de agrupamento para diferentes tipos de dados</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="github-rbookdown---como-publicar-livros" class="section level1">
+<h1><span class="header-section-number">2</span> GitHub &amp; Rbookdown - Como publicar livros</h1>
+<p>O GitHub é um sistema de compartilhamento de dados que permite um controle de versão de arquivos. Isso porque ele se baseia no Git, uma ferramenta de VCS (Sistema de Controle de Versão).
+O fato do GitHub ser uma plataforma OpenSource possibilita que outros usuários colaborem com os trabalhos lá postados em modo público, sugerindo otimizações em novas versões, que, não modificam o arquivo original.<br />
+Para publicar um Rbookdown em uma página Github são necessários alguns passos</p>
+<ol style="list-style-type: decimal">
+<li>Instalando o Git no coputador</li>
+</ol>
+<p>Como o Git a linguagem que serve como base para o GitHub, primeiramente deve-se baixa-lo no computador. Para isso, acesse o <a href="https://git-scm.com/downloads">link</a>, escolha o sistema operacional, faça o download e instale o programa normalmente.</p>
+<ol start="2" style="list-style-type: decimal">
+<li>Criar um repositório no GitHub</li>
+</ol>
+<p>Primeiramente deve-se criar uma conta na pataforma GitHub. Para isso, deve-se entrar na opção <a href="https://github.com/join?source=header-home">Sign up</a>no site e cadastrar um nome de usuário, email e uma senha.
+Criado a conta, na página inicial do GitHub, deve-se clicar na opção criar um novo projeto, que irá abrir a pagina <strong>Create a new repository</strong> que pode ser observado na figura (2.1).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-1"></span>
+<img src="Print1.PNG" alt="Janela do repositório" width="100%" />
+<p class="caption">
+Figure 2.1: Janela do repositório
+</p>
+</div>
+<p>Repositórios são análogos de pastas, portanto para cada projeto deve-se criar um novo repositório. Para isso, deve-se definir um nome e, opicionalmente, uma descrição do seu projeto. Antes de criar o repositório marque a opção <strong>Initialize this repository with a README</strong>.
+Repositórios em modo público podem ser criadas de forma ilimitada e gratuita, porém, no modo privado requerem uma assinatura mensal.
+Feito isso, será exibido a página inial do repositório, ilustrado pela figura (2.2).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
+<img src="Print2.PNG" alt="Página inicial do repositório" width="100%" />
+<p class="caption">
+Figure 2.2: Página inicial do repositório
+</p>
+</div>
+<p>A página inicial é composta, por exemplo, de uma barra de configurações gerais do repositório, opções de branch -espécie da subpastas- e opções de criar,deletar e editar arquivos. Por agora, deve-se semente cliar em <strong>Clone or Download</strong> e copiar o link.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Criando um projeto de Rbookdown no R</li>
+</ol>
+<p>Há diversas formas de criar o livro em linguagem R. Aqui será abordado a utilização de arquivos Rmarkdown
+Prmeiramente, deve-se abrir o RStudio e sincronizar uma pasta do computador com o repositório no Github. Para isso deve-se clicar na aba <strong>file</strong> que abrirá a janela <strong>New Project</strong>. Nesta janela selecionar <strong>Version Control</strong> e, posteriomente, <strong>Git</strong>.
+Feito isso, aparecerá três opções para serem preenchidas, como pode ser observado na figura 3.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
+<img src="Print3.PNG" alt="Janela New Project" width="100%" />
+<p class="caption">
+Figure 2.3: Janela New Project
+</p>
+</div>
+<p>Na aba <strong>Repository URL</strong> cole o link copiado no passo anterior.
+Na aba <strong>Project directory name</strong> dê um nome ao diretório.
+Na aba <strong>Create project as subdirectory of:</strong> selecione um destino no computador para a pasta compartilhada com o repositório.
+Clique em <strong>Create a project</strong> para finalizar a operação.</p>
+<ol start="4" style="list-style-type: decimal">
+<li>Configurando o livro para publicação</li>
+</ol>
+<p>Para que o GitHub gere um livro em um URL são necessários três arquivos essencialmente:</p>
+<p>Index.Rmd</p>
+<blockquote>
+<p>Esse arquivo vem com as informações do livro, como nome do autor e do livro, descrição, e, em alguns casos, um prefácio.
+Demais arquivos “.Rmd” podem ser criados com as iniciais 01-/02-/03-/…; onde o número representa a ordem que os capítulos serão organizados.</p>
+</blockquote>
+<p>_bookdown.yml</p>
+<blockquote>
+<p>Sendo o arquivo responsável pelo output, neste arquivo se edita as configurações do documento. Existe uma infinidade de funções que porem customizar o documento exibido que são bem descritas <a href="https://bookdown.org/yihui/bookdown/html.html#gitbook-style">aqui</a>.</p>
+</blockquote>
+<p>.nojekyll</p>
+<blockquote>
+<p>Esse arquivo é responsável somente por disponibilizar a opção “master branch /docs folder” no GitHub que será útil na hora de se criar a url que ficará disponível o livro.</p>
+</blockquote>
+<p>Portanto, nessa etapa deve-se criar os três arquivos na pasta escolhida como diretório no passo 3.
+O <strong>.nojekyll</strong> é criado com o comando <code>file.create('.nojekyll')</code> que pode ser digitado no Rstudio.
+Tanto o **_bookdown.Yml** e o <strong>Index.Rmd</strong> são arquivos <strong>.Rmd</strong>, portanto, devem ser cria-los através dos comandos <strong>File</strong>,<strong>New File</strong> e <strong>R-markdown…</strong>; respectivamente. Na janela que será aberta basta dar <strong>Ok</strong> uma vez que as configurações serão mudadas através dos códigos.<br />
+O **_bookdown.Yml** deve conter a linha <code>output_dir: &quot;docs&quot;</code>. Já o <strong>Index.Rmd</strong> deve conter o código, que é dado por:</p>
+<pre><code>---
+title: &quot;Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara&quot;
+author: &quot;Rodrigo Teotônio&quot;
+site: bookdown::bookdown_site
+documentclass: book
+output:
+  bookdown::gitbook: default
+  #bookdown::pdf_book: default
+---</code></pre>
+<p>Das linhas deste documento, cada uma representa uma configurações do livro. Algumas são parte do código mínimo, portanto não deveram ser alteradas; outras são inforções sobre o projeto que podem e devem ser modificadas. Estas são as configurações <code>title</code> e <code>author</code>, sendo preenchidas, respectivamente, pelo título do livro e o nome do autor.
+Feito isso, basta clicar na aba “build” no canto superior direito do Rstudio, e selecionar a opção <strong>Build Book</strong> para visualizar o livro.</p>
+<p>5.Exportando os arquivos para o GitHub</p>
+<p>Criado os arquivos básicos e as demais partes do livro em arquivos <strong>.Rmd</strong>, agora pode-se exportar os arquivos do diretório do computador para o repositírio no GitHub através do Git.
+Para isso, abra o Git, e digite os seguintes comandos:</p>
+<p><code>git config --global user.nYame &quot;YOUR NAME&quot;</code> // Faça o login com o usuário GitHub;</p>
+<p><code>git config --global user.email &quot;YOUR EMAIL ADDRESS&quot;</code> // Faça o login com o email GitHub;</p>
+<p><code>cd “O DIRETÓRIO CRIADO EM 2”</code> // Selecione o diretório do Rproject;</p>
+<p><code>git init</code> // Seleciona o repositório nesse diretório;</p>
+<p><code>git add -A</code> //Adiciona todos os arquivos novos;</p>
+<p><code>git commit -m “DESCRIÇÃO DA PRIMEIRA ATUALIZAÇÃO”</code> // Envia para área de teste;</p>
+<p><code>git push</code> // Envia para o repositório no git;</p>
+<p>No GitHub estes arquivos já podem ser vistos na interface principal.
+Para constuir um Website com o livro, deve-se, na interface do GitHub, clicar na <strong>condigurações</strong> e, em <strong>souce</strong>, selecione a opção <strong>master branch /docs folder</strong>. Feito isso, o GitHub irá gerar o link, que pode ser visualizado em cima da opção.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="algoritmos-nao-supervisionados.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

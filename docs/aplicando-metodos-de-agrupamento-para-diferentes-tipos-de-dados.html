@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara</title>
+  <meta name="description" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara" />
+  
+  
+  
+
+<meta name="author" content="Rodrigo Teotônio">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="metodos-de-visualizacao-do-numero-ideal-de-clusters.html">
+
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Motivação</a></li>
+<li class="chapter" data-level="2" data-path="github-rbookdown-como-publicar-livros.html"><a href="github-rbookdown-como-publicar-livros.html"><i class="fa fa-check"></i><b>2</b> GitHub &amp; Rbookdown - Como publicar livros</a></li>
+<li class="chapter" data-level="3" data-path="algoritmos-nao-supervisionados.html"><a href="algoritmos-nao-supervisionados.html"><i class="fa fa-check"></i><b>3</b> Algoritmos não supervisionados</a></li>
+<li class="chapter" data-level="4" data-path="metodos-de-visualizacao-do-numero-ideal-de-clusters.html"><a href="metodos-de-visualizacao-do-numero-ideal-de-clusters.html"><i class="fa fa-check"></i><b>4</b> Métodos de visualização do número ideal de “clusters”</a></li>
+<li class="chapter" data-level="5" data-path="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html"><a href="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html"><i class="fa fa-check"></i><b>5</b> Aplicando métodos de agrupamento para diferentes tipos de dados</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados" class="section level1">
+<h1><span class="header-section-number">5</span> Aplicando métodos de agrupamento para diferentes tipos de dados</h1>
+<p>Por possuírem características diferentes, cada algoritmo consegue obter um resultado mais satisfatório com determinado tipo de dados. Portanto, ao se escolher o algoritmo ideal deve-se levar em conta fatores como tamanho e distribuição dos dados, tempo de execução do algoritmo e precisão do resultado.</p>
+<p>O primeiro fator analisado diz respeito ao comportamento de cada algoritmo diante de dados com distribuição de dados randômica. Diz-se que uma distribuição é randômica quando todos os pontos de um dado estão muito próximos um do outro. Para isso, utilizou-se uma amostra aleatória, obtida através da função sample do R.</p>
+<p>Tal amostra foi, primeiramente, agrupada em três “clusters” utilizando o K-means duas vezes distintas, os resultados foram plotados em gráficos (5.1) (5.2) com o auxílio do pacote de visualização de “cluster” factorextra(2017).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<img src="Grap1.PNG" alt="Primeira distribuição randômica pelo K-means" width="65%" />
+<p class="caption">
+Figure 5.1: Primeira distribuição randômica pelo K-means
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<img src="Grap2.PNG" alt="Segunda distribuição randômica pelo K-means" width="65%" />
+<p class="caption">
+Figure 5.2: Segunda distribuição randômica pelo K-means
+</p>
+</div>
+<p>O gráfico (5.1) foi resultado da primeira tentativa de agrupar o dado, e o gráfico (5.2) foi o resultado obtido após reexecutar o algoritmo nas mesmas conduções. Esperava-se os mesmos resultados nas duas tentativas, porém o K-means encontrou padrões diferentes em cada execução.</p>
+<p>Isso se dá por principalmente dois fatores, o primeiro desrespeito que o K-means utilizar da distância euclidiana para calcular a similaridade. A distância euclidiana por elevar a diferença das coordenadas de cada ponto ao quadrado torna o cálculo da similaridade sensível a pontos muito difusos.</p>
+<p>O segundo tem a ver com o ponto inicial escolhido pelo algoritmo. O K-means, partindo de amostras aleatórias como centroides, agrupa e reagrupa os dados até encontrar o menor resultado da equação (3.1), porém, para dados randômicos esse resultado pode ser encontrado com diferentes padrões de agrupamento, dependendo justamente do ponto inicial de centroides.
+Agrupando a mesma amostra randômica, sob as mesmas circunstâncias, porém agora através do PAM obtém-se os gráficos (5.3) (5.4).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<img src="Grap3.PNG" alt="Primeira distribuição randômica pelo PAM" width="65%" />
+<p class="caption">
+Figure 5.3: Primeira distribuição randômica pelo PAM
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<img src="Grap4.PNG" alt="Segunda distribuição randômica pelo PAM" width="65%" />
+<p class="caption">
+Figure 5.4: Segunda distribuição randômica pelo PAM
+</p>
+</div>
+<p>O gráfico (5.3) é a primeira tentativa de agrupamento e o gráfico (5.2) a segunda. Observa-se que ambos os gráficos são idênticos, atendendo então os resultados esperados. Portanto o PAM não apresenta o mesmo problema do K-means.</p>
+<p>Isso essencialmente porque o PAM utiliza a distância de Manhattan, menos sensível a pontos difusos, por não elevar a diferença ao quadrado; e porque o ponto inicial é calculado.</p>
+<p>Dado os resultados conclui-se que, para dados randômicos o PAM é uma melhor opção por confiabilidade. Porém, ao comparar os gráficos (5.3) e (5.1) - este feito através do K-means e aquele do PAM - veremos que são idênticos. Isso mostra que o K-means tem potencial para obter resultados tão bons quanto aos do PAM.</p>
+<p>Mas outro fator que deve ter em consideração ao escolher entre os métodos é o tamanho dos dados. O PAM apesar de mais confiável é limitado não conseguindo processar dados muito grandes.</p>
+<p>Portando agora foi exportado uma tabela do IBGE contendo o PIB per capita dos municípios brasileiros nos anos de 2010 e 2011. Agrupou-se em os dados em cinco clusters e plotou-se o resultado nos gráficos (5.5) (5.6), sendo o primeiro através do K-means e o segundo através do CLARA.</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="Grap5.PNG" alt="Agrupamento pelo K-means" width="65%" />
+<p class="caption">
+Figure 5.5: Agrupamento pelo K-means
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
+<img src="Grap6.PNG" alt="Agrupamento pelo CLARA" width="65%" />
+<p class="caption">
+Figure 5.6: Agrupamento pelo CLARA
+</p>
+</div>
+<p>Dado os dois gráficos é visível que os dois algoritmos encontraram padrões diferentes de agrupamentos. A ideia desse agrupamento era verificar se há padrões de PIB dentro das cidades de cada estado brasileiro. Fazendo-se então uma tabela gabarito, que mostra quantas cidades de cada estado foi classificada em cada cluster obtém as seguintes tabelas (1) (2).</p>
+<p><strong>Tabela 1</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Regiões</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Centro-Oeste</td>
+<td>173</td>
+<td>54</td>
+<td>222</td>
+<td>12</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Nordeste</td>
+<td>1665</td>
+<td>28</td>
+<td>108</td>
+<td>6</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>Norte</td>
+<td>368</td>
+<td>9</td>
+<td>86</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Sudeste</td>
+<td>812</td>
+<td>202</td>
+<td>655</td>
+<td>44</td>
+<td>9</td>
+</tr>
+<tr class="odd">
+<td>Sul</td>
+<td>210</td>
+<td>196</td>
+<td>726</td>
+<td>11</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabela 2</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Regiões</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Centro-Oeste</td>
+<td>154</td>
+<td>200</td>
+<td>38</td>
+<td>56</td>
+<td>15</td>
+</tr>
+<tr class="even">
+<td>Nordeste</td>
+<td>58</td>
+<td>209</td>
+<td>1504</td>
+<td>30</td>
+<td>6</td>
+</tr>
+<tr class="odd">
+<td>Norte</td>
+<td>49</td>
+<td>176</td>
+<td>229</td>
+<td>9</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Sudeste</td>
+<td>404</td>
+<td>634</td>
+<td>414</td>
+<td>216</td>
+<td>54</td>
+</tr>
+<tr class="odd">
+<td>Sul</td>
+<td>513</td>
+<td>394</td>
+<td>20</td>
+<td>205</td>
+<td>14</td>
+</tr>
+</tbody>
+</table>
+<p>A tabela (1) se refere do agrupamento pelo K-means, enquanto que a tabela (2) se refere pelo CLARA. Dada as duas tabelas dá para se concluir que o agrupamento pelo método CLARA obteve melhor resultado uma vez que o número majoritário de cidades de cada estado ficou concentrado em três clusters, enquanto pelo K-means em dois. Agora refazendo esse agrupamento, porém pelo método PAM, obtém-se o gráfico (5.7).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-10"></span>
+<img src="Grap7.PNG" alt="Agrupamento pelo PAM" width="65%" />
+<p class="caption">
+Figure 5.7: Agrupamento pelo PAM
+</p>
+</div>
+<p>Analisando o gráfico (5.7) observa-se que ele contém o mesmo padrão que o gráfico (5.6), ou seja, tanto o agrupamento no PAM e no CLARA obteve o mesmo resultado. Daí conclui-se que o CLARA é a melhor ferramenta para grandes pois consegue manter a precisão do PAM mas com um tempo de execução absurdamente menor.</p>
+<p>Agora para comparar a eficiência entre o PAM e o K-means em dados pequenos e não randômicos foi utilizado o dado do banco de dados iris do R. Esse banco de dados consistem no comprimento e largura das pétalas e sépalas de cento e cinquenta flores de três espécies diferentes. Fez-se o processo de agrupamento por cada método e o plotado nos gráficos (8) (5.9).</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-11"></span>
+<img src="Grap8.PNG" alt="Agrupamento pelo K-means" width="65%" />
+<p class="caption">
+Figure 5.8: Agrupamento pelo K-means
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="Grap9.PNG" alt="Agrupamento pelo CLARA" width="65%" />
+<p class="caption">
+Figure 5.9: Agrupamento pelo CLARA
+</p>
+</div>
+<p>Seja o gráfico (5.8) pelo K-means e o (5.9) pelo CLARA, ao analisá-los é notório que ambos algoritmos mais uma vez encontraram padrões diferentes. Assim, fazendo uma tabela gabarito, contendo quantas flores de cada espécie foi classificada em cada cluster obtém se as tabelas (3) (4).</p>
+<p><strong>Tabela 3</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Cluster</th>
+<th>Setosa</th>
+<th>Versicolor</th>
+<th>Virginica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>0</td>
+<td>39</td>
+<td>14</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>0</td>
+<td>11</td>
+<td>36</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>50</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tabela 4</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Cluster</th>
+<th>Setosa</th>
+<th>Versicolor</th>
+<th>Virginica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>50</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>0</td>
+<td>9</td>
+<td>36</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>0</td>
+<td>41</td>
+<td>14</td>
+</tr>
+</tbody>
+</table>
+<p>Seja a tabela (3) pelo K-means e a tabela (4) pelo PAM, é visível que os resultados do PAM foram melhores já que classificou um número maior de versicolores no cluster 3.</p>
+<p>Com isso conclui-se que o K-means, por ser um algoritmo mais simples, consegue classificar dados de forma rápida e eficaz, podendo ser usado para dados grandes ou pequenos, com exceção de dados randômicos, no qual perde confiabilidade.</p>
+<p>Já o PAM é um algoritmo robusto, e, justamente por isso, é mais preciso que o K-means ao mesmo tempo que demanda mais tempo para rodar, por isso é ideal para dados pequenos sejam eles randômicos ou não.</p>
+<p>Por fim o CLARA é uma ótima saída para dados grandes, uma vez que consegue, com agilidade, agrupa-los sem perder muito em precisão para o PAM.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="metodos-de-visualizacao-do-numero-ideal-de-clusters.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

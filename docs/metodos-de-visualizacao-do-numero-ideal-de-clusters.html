@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara</title>
+  <meta name="description" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara">
+  <meta name="generator" content="bookdown 0.7 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara" />
+  
+  
+  
+
+<meta name="author" content="Rodrigo Teotônio">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="algoritmos-nao-supervisionados.html">
+<link rel="next" href="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Motivação</a></li>
+<li class="chapter" data-level="2" data-path="github-rbookdown-como-publicar-livros.html"><a href="github-rbookdown-como-publicar-livros.html"><i class="fa fa-check"></i><b>2</b> GitHub &amp; Rbookdown - Como publicar livros</a></li>
+<li class="chapter" data-level="3" data-path="algoritmos-nao-supervisionados.html"><a href="algoritmos-nao-supervisionados.html"><i class="fa fa-check"></i><b>3</b> Algoritmos não supervisionados</a></li>
+<li class="chapter" data-level="4" data-path="metodos-de-visualizacao-do-numero-ideal-de-clusters.html"><a href="metodos-de-visualizacao-do-numero-ideal-de-clusters.html"><i class="fa fa-check"></i><b>4</b> Métodos de visualização do número ideal de “clusters”</a></li>
+<li class="chapter" data-level="5" data-path="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html"><a href="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html"><i class="fa fa-check"></i><b>5</b> Aplicando métodos de agrupamento para diferentes tipos de dados</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Análise de formação de agrupamentos pelos algoritmos não supervisionados K-Means, PAM e Clara</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="metodos-de-visualizacao-do-numero-ideal-de-clusters" class="section level1">
+<h1><span class="header-section-number">4</span> Métodos de visualização do número ideal de “clusters”</h1>
+<p>Seja qual for o algoritmo a se utilizar, sempre o primeiro passo para agrupar dados passa pela determinação do número de clusters. Infelizmente este passo, como já falado, é feito pelo usuário. Assim, para dar uma melhor visão a este usuário, podendo minimizar o máximo os erros, nessa etapa fazem-se o uso de métodos computacionais que indicam uma quantidade ideal de clusters. Há mais de vinte métodos disponíveis no pacote factoextra(2017) para fazer essa análise, porém dois desses serão descritos, o “Elbow Method”, ou Método do Cotovelo; e a “Average Silhouette” ou Média Sihueta.
+Como já discutido, um agrupamento ideal em determinado dado é definido por uma distância mínima entre elementos do mesmo cluster, e máxima entre elementos de clusters diferentes. Após o agrupamento de dados, é efetuado o somatório do grau de similaridade W de cada cluster Ck, e para esse somatório é dado o nome de “Total Within-Cluster Sum of Square (WSS)” e traduzido pela equação (4.1).</p>
+<p><strong>Equação 4.1</strong></p>
+<p><span class="math display">\[\begin{equation} 
+ WSS={\sum\limits_{C_{k}=1}^{k}W(C_{k}))}
+\end{equation}\]</span></p>
+<p>O primeiro método, denominado “Elbow Method”, se dá justamente na representação do “Total Within-Cluster Sum of Square” para cada número de clusters e plotagem de um gráfico com os respectivos dados. A partir desse gráfico diz-se que o número de clusters ideal é justamente o “cotovelo” dessa curva, ou seja, é o número no qual, a partir dele, a variação dos valores do WSS seja pequena.</p>
+<p>O outro método de determinar o número de clusters é a “Silhouette”. Enquando o “Elbow” mede o grau de similaridade dos componentes do mesmo cluster, o “Silhouette” é um fator que mede o quanto cada objeto se assemelha ao seu próprio cluster. Para isso, o método computa o algoritmo escolhido de agrupamento (K-means, PAM ou CLARA) com um número de clusters variando de um até dez, por padrão. O “Silhouette” de um determinado ponto do dado é calculado pela equação (4.2)</p>
+<p><strong>Equação 4.2</strong></p>
+<p><span class="math display">\[\begin{equation} 
+ S(i)=\frac{b(i)-a(i)}{max[a(i),b(i)]}
+\end{equation}\]</span></p>
+<p>na qual a “Silhouette” S de um dado ponto i, pertencente a um cluster K, é calculado de forma que a(i) é a média das distâncias deste ponto com outros pertencentes ao mesmo cluster; e b(i) é a menor distância entre o ponto em questão e outro de um cluster diferente. No denominador, a função max retorna a maior distância entre a(i) e b(i).
+Daí a equação (4.2) é aplicada em cada ponto do dado agrupado, e é feito uma média do resultado de todos os esses pontos, sendo então essa, a “Average Silhouette” traduzida na equação (4.3)</p>
+<p><strong>Equação 4.3</strong></p>
+<p><span class="math display">\[\begin{equation} 
+ Cost(M,D)=\frac{\sum\limits_{i\in_U}S(i)}{n}
+\end{equation}\]</span></p>
+<p>sendo que a “Average Silhouette” Smédia de um dado U é o somatório do “Silhouette” S de cada ponto i pertencente a esse dado, dividido pelo número de pontos n. Esse processo é repetido K vezes para cada n número de clusters, e um gráfico é gerado, com a “Average Silhouette” em função de n. Diz-se que o valor ideal de clusters é quando a “Average Silhouette” é máxima.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="algoritmos-nao-supervisionados.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="aplicando-metodos-de-agrupamento-para-diferentes-tipos-de-dados.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
